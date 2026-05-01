@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin_stan
+  siswa
+}
+
+enum JenisMenu {
+  makanan
+  minuman
+}
+
+enum StatusTransaksi {
+  belum_dikonfirm
+  dimasak
+  diantar
+  sampai
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  role     Role
+
+  siswa Siswa?
+  stan  Stan?
+}
+
+model Siswa {
+  id          Int    @id @default(autoincrement())
+  nama_siswa  String
+  alamat      String
+  telp        String
+  foto        String?
+
+  id_user Int @unique
+  user    User @relation(fields: [id_user], references: [id])
+
+  transaksi Transaksi[]
+}
+
+model Stan {
+  id            Int    @id @default(autoincrement())
+  nama_stan     String
+  nama_pemilik  String
+  telp          String
+
+  id_user Int @unique
+  user    User @relation(fields: [id_user], references: [id])
+
+  menu       Menu[]
+  transaksi  Transaksi[]
+}
+
+model Menu {
+  id             Int    @id @default(autoincrement())
+  nama_makanan   String
+  harga          Float
+  jenis          JenisMenu
+  foto           String?
+  deskripsi      String
+
+  id_stan Int
+  stan    Stan @relation(fields: [id_stan], references: [id])
+
+  detail_transaksi DetailTransaksi[]
+  menu_diskon      MenuDiskon[]
+}
+
+model Diskon {
+  id                 Int      @id @default(autoincrement())
+  nama_diskon        String
+  persentase_diskon  Float
+  tanggal_awal       DateTime
+  tanggal_akhir      DateTime
+
+  menu_diskon MenuDiskon[]
+}
+
+model MenuDiskon {
+  id Int @id @default(autoincrement())
+
+  id_menu Int
+  menu    Menu @relation(fields: [id_menu], references: [id])
+
+  id_diskon Int
+  diskon    Diskon @relation(fields: [id_diskon], references: [id])
+}
+
+model Transaksi {
+  id       Int      @id @default(autoincrement())
+  tanggal  DateTime @default(now())
+  status   StatusTransaksi
+
+  id_stan Int
+  stan    Stan @relation(fields: [id_stan], references: [id])
+
+  id_siswa Int
+  siswa    Siswa @relation(fields: [id_siswa], references: [id])
+
+  detail_transaksi DetailTransaksi[]
+}
+
+model DetailTransaksi {
+  id         Int   @id @default(autoincrement())
+  qty        Int
+  harga_beli Float
+
+  id_transaksi Int
+  transaksi    Transaksi @relation(fields: [id_transaksi], references: [id])
+
+  id_menu Int
+  menu    Menu @relation(fields: [id_menu], references: [id])
+}
