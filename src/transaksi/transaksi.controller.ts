@@ -10,6 +10,10 @@ import {
 import { TransaksiService } from './transaksi.service';
 import { StatusTransaksi } from '@prisma/client';
 import { CreateTransaksiDto } from './dto/create-transaksi.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+
+@ApiBearerAuth() // 🔥 ini yang bikin gembok muncul
+@Controller('transaksi')
 
 @Controller('transaksi')
 export class TransaksiController {

@@ -9,6 +9,9 @@ import {
 } from '@nestjs/common';
 import { StanService } from './stan.service';
 import { CreateStanDto } from './dto/create-stan.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+
+@ApiBearerAuth()
 
 @Controller('stan')
 export class StanController {

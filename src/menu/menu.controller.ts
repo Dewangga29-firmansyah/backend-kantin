@@ -9,6 +9,9 @@ import {
 } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+
+@ApiBearerAuth()
 
 @Controller('menu')
 export class MenuController {
