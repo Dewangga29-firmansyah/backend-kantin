@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { JenisMenu } from '@prisma/client';
 
 export class CreateMenuDto {
   @ApiProperty()
@@ -7,11 +8,11 @@ export class CreateMenuDto {
   @ApiProperty()
   harga: number;
 
-  @ApiProperty({ enum: ['makanan', 'minuman'] })
-  jenis: string;
+  @ApiProperty({ enum: JenisMenu })
+  jenis: JenisMenu;
 
-  @ApiProperty()
-  foto: string;
+  @ApiProperty({ required: false })
+  foto?: string;
 
   @ApiProperty()
   deskripsi: string;

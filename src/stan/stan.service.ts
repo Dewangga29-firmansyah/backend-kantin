@@ -6,19 +6,25 @@ export class StanService {
   constructor(private prisma: PrismaService) {}
 
   create(data: any) {
-    return this.prisma.stan.create({ data });
+    return this.prisma.stan.create({
+      data: {
+        nama_stan: data.nama_stan,
+        nama_pemilik: data.nama_pemilik,
+        telp: data.telp,
+        id_user: data.id_user,
+      },
+    });
   }
 
   findAll() {
     return this.prisma.stan.findMany({
-      include: { user: true, menu: true },
+      include: { user: true },
     });
   }
 
   findOne(id: number) {
     return this.prisma.stan.findUnique({
       where: { id },
-      include: { menu: true },
     });
   }
 

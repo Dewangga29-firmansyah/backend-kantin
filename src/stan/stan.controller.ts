@@ -8,15 +8,16 @@ import {
   Delete,
 } from '@nestjs/common';
 import { StanService } from './stan.service';
+import { CreateStanDto } from './dto/create-stan.dto';
 
 @Controller('stan')
 export class StanController {
   constructor(private readonly stanService: StanService) {}
 
   @Post()
-  create(@Body() body: any) {
-    return this.stanService.create(body);
-  }
+create(@Body() body: CreateStanDto) {
+  return this.stanService.create(body);
+}
 
   @Get()
   findAll() {

@@ -1,19 +1,15 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateStanDto {
-  @IsNotEmpty()
-  @IsString()
+  @ApiProperty()
   nama_stan: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @ApiProperty()
   nama_pemilik: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @ApiProperty()
   telp: string;
 
-  @IsNotEmpty()
-  @IsNumber()
+  @ApiProperty()
   id_user: number;
 }
